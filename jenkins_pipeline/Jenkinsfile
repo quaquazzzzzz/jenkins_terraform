@@ -13,19 +13,16 @@ pipeline {
             }
         }
         stage('Apply') {
-            when {
-                expression {
-                    return params.APPLY
-                }
-            }
             steps {
-                input {
-                    message 'Soll die Änderung angewendet werden?'
-                    parameters {
+                script {
+                    def userInput = input(
+                        id: 'userInput', message: 'Soll die Änderung angewendet werden?', parameters: [
                         booleanParam(name: 'APPLY', defaultValue: false, description: 'Apply Terraform changes?')
+                    ])
+                    if (userInput == 'true') {
+                        sh 'terraform apply -auto-approve'
                     }
                 }
-                sh 'terraform apply -auto-approve'
             }
         }
     }
