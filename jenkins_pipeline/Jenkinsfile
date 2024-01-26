@@ -15,11 +15,11 @@ pipeline {
         stage('Apply') {
             steps {
                 input {
-                    message "Soll die Änderung angewendet werden?"
-                    parameters {
-                        booleanParam(name: 'APPLY', defaultValue: false, description: 'Apply Terraform changes?')
-                    }
-                }
+    message 'Soll die Änderung angewendet werden?'
+    parameters {
+        booleanParam(name: 'APPLY', defaultValue: false, description: 'Apply Terraform changes?')
+    }
+}
                 when {
                     expression {
                         return params.APPLY
