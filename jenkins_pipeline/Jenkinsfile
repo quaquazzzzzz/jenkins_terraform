@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('Plan') {
+            steps {
+                sh 'terraform plan'
+            }
+        }
+        stage('Apply') {
+            steps {
+                input {
+                    message "Soll die Änderung angewendet werden?"
+                    parameters {
+                        booleanParam(name: 'APPLY', default: false, description: 'Apply Terraform changes?')
+                    }
+                }
+                when {
+                    expression {
+                        return params.APPLY
+                    }
+                }
+                sh 'terraform apply -auto-approve'
+            }
+        }
+    }
+}
