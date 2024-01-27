@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage('Init') {
             steps {
-                sh 'terraform init'
+                sh '/home/linuxbrew/.linuxbrew/bin/terraform init'
             }
         }
         stage('Plan') {
             steps {
-                sh 'terraform plan'
+                sh '/home/linuxbrew/.linuxbrew/bin/terraform plan'
             }
         }
         stage('Apply') {
@@ -20,7 +20,7 @@ pipeline {
                         booleanParam(name: 'APPLY', defaultValue: false, description: 'Apply Terraform changes?')
                     ])
                     if (userInput == 'true') {
-                        sh 'terraform apply -auto-approve'
+                        sh '/home/linuxbrew/.linuxbrew/bin/terraform apply -auto-approve'
                     }
                 }
             }
